@@ -38,7 +38,7 @@ def get_number_name(number):
     insert_comma = False
     while number > 0:
         if three_digit_block_index == len(triplet_levels):
-            raise ('Oops!! Cannot handle such a large number yet!!')
+            raise Exception('Oops!! Cannot handle such a large number yet!!')
         three_digits = number % THOUSAND_NUM
         three_digits_name = get_name_of_three_digit_number(three_digits)
         three_digits_name = [word for word in three_digits_name if word != '']
@@ -69,5 +69,5 @@ def print_number_names(input_numbers):
 USE_AND = True
 USE_COMMA = True
 CAPITALIZE_NAME = True
-input_numbers = [0, 123000000000, 123, 123456, 00000777]
+input_numbers = [0, 123000000000000000, 123, 123456, 00000777]
 print_number_names(input_numbers)
