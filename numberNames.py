@@ -46,7 +46,6 @@ def get_number_name(number):
             reverse_number_name_list.append(triplet_levels[three_digit_block_index])
             if insert_comma and USE_COMMA:
                 reverse_number_name_list[-1] += COMMA
-                insert_comma = False
             reverse_number_name_list.extend(three_digits_name)
             insert_comma = True
         three_digit_block_index += 1
