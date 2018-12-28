@@ -24,10 +24,10 @@ def f(input_arr):
     result = []
     for i in xrange(length):
         result.append(left_prod[i]*right_prod[i+2])
-    return input_arr, result
+    return zip(input_arr, result)
 
 
 inputs = [[1, 2, 3, 4, 5],
           [1234, 567, -90],
           [1, 2345]]
-map(lambda x: print(zip(*f(x))), inputs)
+map(lambda x: print(f(x)), inputs)
