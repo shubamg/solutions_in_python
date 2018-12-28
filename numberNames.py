@@ -5,13 +5,13 @@ HUNDRED = 'hundred'
 THOUSAND_NUM = 1000
 AND = 'and'
 TENS_SUFFIX = 'ty'
-tens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen',
+ten_to_nineteen = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen',
         'eighteen', 'nineteen']
 AND = 'and'
 COMMA = ','
 
 
-def get_name_of_three_digit_number(num):
+def get_reverse_name_of_three_digit_number(num):
     name = []
     hundred_digit = num / 100
     if hundred_digit > 0:
@@ -21,7 +21,7 @@ def get_name_of_three_digit_number(num):
     if USE_AND and hundred_digit and (tens_digit or units_digit):
         name.append(AND)
     if tens_digit == 1:
-        name.append(tens[units_digit])
+        name.append(ten_to_nineteen[units_digit])
     else:
         if tens_digit > 1:
             name.append(tens_place_names[tens_digit] + TENS_SUFFIX)
@@ -40,7 +40,7 @@ def get_number_name(number):
         if three_digit_block_index == len(triplet_levels):
             raise Exception('Oops!! Cannot handle such a large number yet!!')
         three_digits = number % THOUSAND_NUM
-        three_digits_name = get_name_of_three_digit_number(three_digits)
+        three_digits_name = get_reverse_name_of_three_digit_number(three_digits)
         three_digits_name = [word for word in three_digits_name if word != '']
         if len(three_digits_name):
             reverse_number_name_list.append(triplet_levels[three_digit_block_index])
