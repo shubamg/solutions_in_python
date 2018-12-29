@@ -39,6 +39,20 @@ class Node:
                                                              ', '.join(map(str, self.elements)))
 
 
+class DoublyLinkedListIterator:
+
+    def __init__(self, begin, end):
+        self.current_position = begin
+        self.end_position = end
+
+    def next(self):
+        if self.current_position == self.end_position:
+            raise StopIteration
+        else:
+            self.current_position = self.current_position.get_next()
+            return self.current_position.get_prev()
+
+
 class DoublyLinkedList:
     INFINITY = 2**32
 
@@ -81,14 +95,11 @@ class DoublyLinkedList:
             print "Here are the elements with Max Frequency:"
             print self.end().get_prev(), '\n'
 
+    def __iter__(self):
+        return DoublyLinkedListIterator(self.begin(), self.end())
+
     def __str__(self):
-        node = self.begin()
-        string_representation = ""
-        while node != self.end():
-            string_representation += node.__str__()
-            string_representation += '\n'
-            node = node.get_next()
-        return string_representation
+        return '\n'.join((node.__str__() for node in self))+'\n'
 
 
 class MaxFrequencyDS:
