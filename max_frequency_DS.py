@@ -179,8 +179,3 @@ max_frequency_DS.remove_list([123, 23435354543])
 max_frequency_DS.remove(23435354543)
 max_frequency_DS.print_max_freq()
 max_frequency_DS.remove(2)
-
-
-
-
-
