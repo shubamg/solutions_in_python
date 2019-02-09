@@ -54,9 +54,6 @@ print("#"*100, "\n")
 
 heads = map(lambda x: getattr(x, 'head'), singly_linked_lists)
 
-# head1 = l1.head
-# head2 = l2.head
-
 
 def f(index1, index2):
     def get_list_len(head):
