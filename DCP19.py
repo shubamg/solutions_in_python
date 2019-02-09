@@ -6,7 +6,6 @@ to build the nth house with kth color,
 return the minimum cost which achieves this goal."""
 
 from __future__ import print_function
-from collections import deque
 
 
 class DpState:
@@ -18,7 +17,6 @@ class DpState:
         self.minpath = prev_min_path
         self.minpath.append(-1)
         self.optimal_color = -1
-        self.second_optimal_color = -1
         self.secondmincost = 10000000
         self.secondminpath = prev_second_min_path
         self.secondminpath.append(-1)
@@ -27,7 +25,6 @@ class DpState:
         if cost <= self.mincost:
             self.secondmincost = self.mincost
             self.secondminpath[-1] = self.minpath[-1]
-            self.second_optimal_color = self.optimal_color
             self.mincost = cost
             self.minpath[-1] = color
             self.optimal_color = color
@@ -35,7 +32,6 @@ class DpState:
         elif cost <= self.secondmincost:
             self.secondmincost = cost
             self.secondminpath[-1] = color
-            self.second_optimal_color = color
 
     def get_optimal_color(self):
         return self.optimal_color
