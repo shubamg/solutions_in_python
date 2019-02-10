@@ -17,6 +17,7 @@ because there is a wall everywhere else on the second row."""
 
 from collections import deque
 from collections import namedtuple
+from itertools import product
 
 
 class Point(namedtuple('P', ['x', 'y'])):
@@ -34,7 +35,13 @@ class Point(namedtuple('P', ['x', 'y'])):
         return '[{0}][{1}] = ({1},{0})'.format(self.y, self.x)
 
 
-Point.two_D_movements = [Point(0, -1), Point(0, 1), Point(-1, 0), Point(1, 0)]
+zero = [0]
+one_d_deltas = [-1, 1]
+Point.two_D_movements = list(product(zero, one_d_deltas))
+Point.two_D_movements.extend(list(product(one_d_deltas, zero)))
+Point.two_D_movements = list(map(lambda x: Point(*x), Point.two_D_movements))
+# Point.two_D_movements = [Point(0, -1), Point(0, 1), Point(-1, 0), Point(1, 0)]
+del zero, one_d_deltas
 
 
 def bfs(is_wall, start, end):
