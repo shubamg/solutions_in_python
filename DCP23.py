@@ -16,13 +16,10 @@ since we would need to go through (1, 2)
 because there is a wall everywhere else on the second row."""
 
 from collections import deque
+from collections import namedtuple
 
 
-class Point:
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+class Point(namedtuple('P', ['x', 'y'])):
 
     def add(self, p):
         return Point(self.x + p.x, self.y + p.y)
