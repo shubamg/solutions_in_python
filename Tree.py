@@ -10,18 +10,19 @@ class Node:
         self.children = []
         self.parent = None
 
-    def dfs(self, need_extra_line, prefix, is_last_child=False):
-        if need_extra_line:
-            print(prefix.replace(Node.CHILD_INDICATOR, '|  '))
+    def dfs(self, prefix, is_last_child=False):
         print(prefix, self.val)
 
         replacement = '|  ' if not is_last_child else '   '
-        new_prefix = prefix.replace(Node.CHILD_INDICATOR, replacement) + ' ' * (
-                len(self.val) - 0) + Node.CHILD_INDICATOR
+        new_prefix = prefix.replace(Node.CHILD_INDICATOR, replacement) + ' ' * len(self.val)
+        prefix_for_children  = new_prefix + Node.CHILD_INDICATOR
+        empty_line = new_prefix + '|  '
 
-        num_child = 0
+        num_children_of_prev_child = 0
         for index, child in enumerate(self.children):
-            num_child = child.dfs(num_child > 0, new_prefix, index+1 == len(self.children))
+            if num_children_of_prev_child > 0:
+                print(empty_line)
+            num_children_of_prev_child = child.dfs(prefix_for_children, index+1 == len(self.children))
 
         return len(self.children)
 
@@ -41,7 +42,7 @@ class Tree:
         pass
 
     def dfs(self):
-        self.root.dfs(False, '')
+        self.root.dfs('', True)
 
 
 class Edge:
