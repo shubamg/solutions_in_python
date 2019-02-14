@@ -19,31 +19,31 @@ class Node:
         self.val = val
         self.left = self.right = None
         self.parent = None
-        self.are_all_proper_descendants_unlocked = True
+        self.count_descendants_locked = 0
         self.is_locked = False
 
     def can_change_state(self):
-        can_change_state = self.are_all_proper_descendants_unlocked
+        can_change_state = (self.count_descendants_locked is 0)
         ancestor = self.parent
         while ancestor and can_change_state:
             can_change_state = can_change_state and not ancestor.is_locked
             ancestor = ancestor.parent
         return can_change_state
 
-    def set_state(self, is_locked):
+    def set_state(self, to_lock):
         ancestor = self.parent
         if self.can_change_state():
             while ancestor:
-                ancestor.are_all_proper_descendants_unlocked = False
+                ancestor.count_descendants_locked += (1 if to_lock else -1)
                 ancestor = ancestor.parent
-            self.is_locked = is_locked
-        return self.is_locked == is_locked
+            self.is_locked = to_lock
+        return self.is_locked == to_lock
 
     def lock(self):
-        return "Attempt to lock {0}.{0} is now locked: {1}".format(self.val, self.set_state(True))
+        return "Attempt to lock {0}. {0} is now locked: {1}".format(self.val, self.set_state(True))
 
     def unlock(self):
-        return "Attempt to lock {0}.{0} is now unlocked: {1}".format(self.val, self.set_state(False))
+        return "Attempt to unlock {0}. {0} is now unlocked: {1}".format(self.val, self.set_state(False))
 
 
 class Edge:
@@ -87,6 +87,8 @@ F-R>H"""
 
 tree = Tree((Edge(x) for x in edge_list_str.split('\n')), 'A')
 operations = (tree.lock('A'), tree.lock('G'), tree.unlock('G'), tree.lock('A'),
-              tree.unlock('A'), tree.lock('B'), tree.lock('D'))
+              tree.unlock('A'), tree.lock('B'), tree.lock('D'),
+              tree.lock('C'), tree.lock('A'), tree.unlock('B'),
+              tree.lock('A'), tree.unlock('C'), tree.lock('A'))
 for operation in operations:
     print(operation)
