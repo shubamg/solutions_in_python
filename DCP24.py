@@ -23,7 +23,7 @@ class Node:
         self.is_locked = False
 
     def can_change_state(self):
-        can_change_state = (self.count_descendants_locked is 0)
+        can_change_state = (self.count_descendants_locked == 0)
         ancestor = self.parent
         while ancestor and can_change_state:
             can_change_state = can_change_state and not ancestor.is_locked

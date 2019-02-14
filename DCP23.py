@@ -85,5 +85,3 @@ print(bfs(
     [False, False, False, False],
     [False, False, False, False]],
     Point(0, 3), Point(0, 0)))
-
-
