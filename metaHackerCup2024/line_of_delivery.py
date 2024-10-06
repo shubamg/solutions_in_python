@@ -32,13 +32,18 @@ def solve_problem_2_bruteforce(E_i_s):
         while i < len(positions):
             a = positions[i]
             if x < a:
+                # Simple case: Stone reaches 0 energy at x and stops without collisions
                 new_positions.append(x)
                 break
+            # Moving Stone collides with stone at 'a'. It stops at 'a' - 1, transferring energy to stone at 'a'
             new_positions.append(a - 1)
+            # Stone originally at 'a' moves with transferred energy to freely reach x + 1
             x += 1
             i += 1
         if i == len(positions):
+            # Case when the rightmost stone also moves (for loop doesn't break)
             new_positions.append(x)
+        # The stones on the right, which don't move retain their position
         new_positions.extend(positions[i:])
         positions = new_positions
     return get_nearest_stone_from_final_pos(positions, _G)
