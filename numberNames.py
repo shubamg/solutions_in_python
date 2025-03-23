@@ -1,4 +1,5 @@
-digit_names = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+ZERO = 'zero'
+digit_names = [ZERO, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 tens_place_names = [None, None, 'twen', 'thir', 'for', 'fif', 'six', 'seven', 'eigh', 'nine']
 triplet_levels = ['', 'thousand', 'million', 'billion', 'trillion']
 HUNDRED = 'hundred'
@@ -13,10 +14,10 @@ COMMA = ','
 
 def get_reverse_name_of_three_digit_number(num):
     name = []
-    hundred_digit = num / 100
+    hundred_digit = num // 100
     if hundred_digit > 0:
         name.extend([digit_names[hundred_digit], HUNDRED])
-    tens_digit = (num / 10) % 10
+    tens_digit = (num // 10) % 10
     units_digit = num % 10
     if USE_AND and hundred_digit and (tens_digit or units_digit):
         name.append(AND)
@@ -49,10 +50,10 @@ def get_number_name(number):
             reverse_number_name_list.extend(three_digits_name)
             insert_comma = True
         three_digit_block_index += 1
-        number /= THOUSAND_NUM
+        number //= THOUSAND_NUM
     reverse_number_name_list.reverse()
     if not len(reverse_number_name_list):
-        reverse_number_name_list.append(digit_names[0])
+        reverse_number_name_list.append(ZERO)
     number_name = ' '.join(reverse_number_name_list)
     if CAPITALIZE_NAME:
         number_name = number_name.capitalize()
@@ -62,11 +63,11 @@ def get_number_name(number):
 def print_number_names(input_numbers):
     tuples = (get_number_name(number) for number in input_numbers)
     for number, name in tuples:
-        print '{0}: {1}'.format(number, name)
+        print('{0}: {1}'.format(number, name))
 
 
 USE_AND = True
 USE_COMMA = True
 CAPITALIZE_NAME = True
-input_numbers = [0, 123000000000000000, 123, 123456, 00000777]
+input_numbers = [0, 123, 123456, 123000000000000000]
 print_number_names(input_numbers)
