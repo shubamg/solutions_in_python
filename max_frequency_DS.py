@@ -1,7 +1,7 @@
 class Node:
 
     def __init__(self, frequency, element):
-        self.elements = set([element])
+        self.elements = {element}
         self.frequency = frequency
         self._prev = None
         self._next = None
@@ -90,10 +90,10 @@ class DoublyLinkedList:
 
     def print_max_freq(self):
         if self.begin() == self.end():
-            print "Oops!! No element in the DS!! Hence no max frequency elements"
+            print("Oops!! No element in the DS!! Hence no max frequency elements")
         else:
-            print "Here are the elements with Max Frequency:"
-            print self.end().get_prev(), '\n'
+            print("Here are the elements with Max Frequency:")
+            print(self.end().get_prev(), '\n')
 
     def __iter__(self):
         return DoublyLinkedListIterator(self.begin(), self.end())
@@ -145,7 +145,7 @@ class MaxFrequencyDS:
             else:
                 HEAD.add_element(element)
             self.element_to_node[element] = self.frequencies_to_elements.begin()
-        print "Added", element, ". State is:\n", self.frequencies_to_elements
+        print("Added", element, ". State is:\n", self.frequencies_to_elements)
 
     def remove(self, element):
         if element in self.element_to_node:
@@ -175,7 +175,7 @@ class MaxFrequencyDS:
                 self.frequencies_to_elements.remove_node(current_node)
         else:
             raise Exception("Element {} does not exist in the data structure".format(element))
-        print "Removed", element, ". State is:\n", self.frequencies_to_elements
+        print("Removed", element, ". State is:\n", self.frequencies_to_elements)
 
     def print_max_freq(self):
         self.frequencies_to_elements.print_max_freq()
