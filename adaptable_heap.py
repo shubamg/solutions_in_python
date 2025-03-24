@@ -52,6 +52,9 @@ class AdaptableHeap:
             self.elem_to_node[elem].invalidate()
             del self.elem_to_node[elem]
 
+    def __contains__(self, item):
+        return item in self.elem_to_node
+
     def __repr__(self):
         # Return detailed info for debugging.
         return (f"{self.__class__.__name__}(heap={[node.key for node in self.heap]}, "
@@ -184,6 +187,26 @@ class TestAdaptableHeap(unittest.TestCase):
         self.assertEqual(len(self.heap), 0)
         # Popping should not return the deleted element.
         self.assertIsNone(self.heap.pop())
+
+    def test_membership_after_push(self):
+        self.heap.push("apple", 5)
+        self.assertIn("apple", self.heap)
+        self.assertNotIn("banana", self.heap)
+
+    def test_membership_after_pop(self):
+        self.heap.push("apple", 5)
+        self.heap.push("banana", 3)
+        self.assertIn("apple", self.heap)
+        self.assertIn("banana", self.heap)
+        # Pop should remove the element from membership
+        popped = self.heap.pop()
+        self.assertNotIn(popped, self.heap)
+
+    def test_membership_after_delete(self):
+        self.heap.push("cherry", 4)
+        self.assertIn("cherry", self.heap)
+        self.heap.delete("cherry")
+        self.assertNotIn("cherry", self.heap)
 
 if __name__ == '__main__':
     unittest.main()
