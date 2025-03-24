@@ -47,6 +47,11 @@ class AdaptableHeap:
     def __len__(self):
         return len(self.elem_to_node)
 
+    def delete(self, elem):
+        if elem in self.elem_to_node:
+            self.elem_to_node[elem].invalidate()
+            del self.elem_to_node[elem]
+
 class TestAdaptableHeap(unittest.TestCase):
 
     def setUp(self):
@@ -133,6 +138,46 @@ class TestAdaptableHeap(unittest.TestCase):
         self.assertEqual(self.heap.pop(), "x")
         self.assertEqual(self.heap.pop(), "z")
         self.assertEqual(self.heap.pop(), "y")
+        self.assertIsNone(self.heap.pop())
+
+
+    def test_delete_existing(self):
+        # Test that delete removes an element so that it won't be returned by pop.
+        self.heap.push("a", 10)
+        self.heap.push("b", 20)
+        self.heap.push("c", 15)
+        # Delete "b".
+        self.heap.delete("b")
+        # __len__ should reflect that "b" is gone.
+        self.assertEqual(len(self.heap), 2)
+        popped = []
+        while True:
+            elem = self.heap.pop()
+            if elem is None:
+                break
+            popped.append(elem)
+        self.assertNotIn("b", popped)
+        # The remaining order should be "a" then "c" (by key order).
+        self.assertEqual(popped, ["a", "c"])
+
+    def test_delete_nonexistent(self):
+        # Deleting an element that doesn't exist should do nothing.
+        self.heap.push("x", 5)
+        # Delete a non-existent element.
+        self.heap.delete("nonexistent")
+        self.assertEqual(len(self.heap), 1)
+        self.assertEqual(self.heap.pop(), "x")
+        self.assertIsNone(self.heap.pop())
+
+    def test_delete_after_multiple_updates(self):
+        # Push multiple updates for the same element and then delete it.
+        self.heap.push("dup", 100)
+        self.heap.push("dup", 50)
+        self.heap.push("dup", 200)
+        # Delete the element.
+        self.heap.delete("dup")
+        self.assertEqual(len(self.heap), 0)
+        # Popping should not return the deleted element.
         self.assertIsNone(self.heap.pop())
 
 if __name__ == '__main__':
