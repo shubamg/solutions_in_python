@@ -52,6 +52,11 @@ class AdaptableHeap:
             self.elem_to_node[elem].invalidate()
             del self.elem_to_node[elem]
 
+    def __repr__(self):
+        # Return detailed info for debugging.
+        return (f"{self.__class__.__name__}(heap={[node.key for node in self.heap]}, "
+                f"valid_elements={list(self.elem_to_node.keys())})")
+
 class TestAdaptableHeap(unittest.TestCase):
 
     def setUp(self):
