@@ -22,6 +22,7 @@ class HeapNode:
     def get_elem(self):
         return self.elem
 
+
 class AdaptableHeap:
 
     def __init__(self):
@@ -59,6 +60,7 @@ class AdaptableHeap:
         # Return detailed info for debugging.
         return (f"{self.__class__.__name__}(heap={[node.key for node in self.heap]}, "
                 f"valid_elements={list(self.elem_to_node.keys())})")
+
 
 class TestAdaptableHeap(unittest.TestCase):
 
@@ -148,7 +150,6 @@ class TestAdaptableHeap(unittest.TestCase):
         self.assertEqual(self.heap.pop(), "y")
         self.assertIsNone(self.heap.pop())
 
-
     def test_delete_existing(self):
         # Test that delete removes an element so that it won't be returned by pop.
         self.heap.push("a", 10)
@@ -207,6 +208,7 @@ class TestAdaptableHeap(unittest.TestCase):
         self.assertIn("cherry", self.heap)
         self.heap.delete("cherry")
         self.assertNotIn("cherry", self.heap)
+
 
 if __name__ == '__main__':
     unittest.main()
